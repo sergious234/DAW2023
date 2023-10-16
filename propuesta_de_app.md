@@ -19,8 +19,8 @@
     territorios en un mapa y subir puestos en la clasificación. 
 
     Estos últimos años la comunidad española ha crecido y se han hecho varios
-    intentos de crear una pagina web donde poder ver, subir y consular los
-    resultados de las batallas pero estas paginas no han sido muy buenas ya 
+    intentos de crear una pagina web donde poder ver, subir, y consular los
+    resultados de las batallas. Estas páginas no han sido muy buenas ya 
     que son las típicas creadas por plantillas web como "Wix" o "ShinjiForum".
 
 ---
@@ -28,9 +28,9 @@
 * ## Desarrollo de la idea
 
     Mi idea es crear una aplicación web donde se pueda hacer todo lo 
-    anteriormente mencionado además de poder consultar estadisitacas de cada
-    uno de los miembros de los clanes y ver una clasificación de los clanes 
-    apuntados a tiempo real.
+    anteriormente mencionado además de poder consultar en tiempo real 
+    estadisitacas de cada uno de los miembros de los clanes y ver una
+    clasificación de los clanes inscritos.
 
     La aplicación web tambien contaría con un sistema de subida de archivos 
     donde los jugadores puedan subir las repeticiones de las partidas en formato 
@@ -79,7 +79,10 @@
         - Tabla jugadores
         - Tabla batallas
 
-
+    3. Repeticiones de las partidas
+        - Guardar de alguna forma en la base de datos las
+        repeticiones que suban los usuarios para que otros
+        puedan descargarlas. 
 
 ---
 
@@ -87,8 +90,8 @@
 
     Soy de computación entonces no tengo ni idea de como hacer un diseño 
     bonito/útil/sencillo para el usuario. Pero por todos es sabido que los mejores 
-    programas son los más feos, por ejemplo VLC no solo puedo abrir videos,
-    imagenes en cualquier formato de archivo inventados o por inventar,tambien 
+    programas son los más feos. Por ejemplo VLC no solo puedo abrir videos o
+    imagenes (en cualquier formato de archivo inventados o por inventar), tambien 
     es capaz de traducir texto en arameo.
 
     Algunas páginas de las que intentré inspirarme serán:
@@ -97,10 +100,16 @@
     - https://eu.wargaming.net/clans/wot/leaderboards/#ratingssearch&offset=0&limit=25&order=-cr
 
     A la hora de mostrar los clanes/jugadores hacerlo con un diseño de
-    tabla y otro de cards como en: https://modrinth.com/mods
+    tabla y otro de cards como en: [modrinth](https://modrinth.com/mods)
 
-    Menu vertical a la izq como en https://tomato.gg/
+    Menu vertical a la izq como en: [TomatoGG](https://tomato.gg/)
 
+    Paginación para que el usuario pueda decidir la cantidad de 
+    elementos que se muestren.
 
-
+    Poder ordenar los elementos de forma ascendente/descendente segun:
+    - Su posicion en el ranking
+    - Numero de batallas jugadas
+    - Mayor daño medio por partida
+    - Numero de provincias controladas
 
