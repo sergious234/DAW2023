@@ -29,7 +29,7 @@ body {
     border-right-width: 1px;
     border-right-style: solid;
     border-right-color: #999999;
-    
+
     transition-property: width;
     transition-duration: 0.25s;
     transition-timing-function: ease;
@@ -44,25 +44,24 @@ body {
     transition-delay: 0s;
 }
 
-
-.main_menu div a span {
-    display: none;
-    opacity: 0;
-    color: #a7afbe;
-}
-
 .main_menu div a img {
     filter: invert(70%);
 }
 
-.main_menu:hover div a span {
-    display: inline;
-    opacity: 1;
-    transition-property: opacity;
-    transition-delay: 1.5s;
-
+.main_menu div a span {
+    opacity: 0;
+    color: #a7afbe;
 }
 
+
+.main_menu:hover div a span {
+    opacity: 1;
+    transition-property: opacity;
+    transition-duration: 0.15s;
+    transition-delay: 0.15s;
+}
+
+
 .no-invert {
-    filter: invert(0%) !important; 
+    filter: invert(0%) !important;
 }
