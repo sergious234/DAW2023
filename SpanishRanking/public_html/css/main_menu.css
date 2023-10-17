@@ -51,11 +51,13 @@ body {
 .main_menu div a span {
     opacity: 0;
     color: #a7afbe;
+    visibility: hidden;
 }
 
 
 .main_menu:hover div a span {
     opacity: 1;
+    visibility: visible;
     transition-property: opacity;
     transition-duration: 0.15s;
     transition-delay: 0.15s;
