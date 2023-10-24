@@ -47,39 +47,53 @@ Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/html.html to edit this
                         </a>
                     </div>
                     <div>
-                        <a class="inline flex space-x-3" href="formulario.html">
+                        <a class="inline flex space-x-3" href="clanes.html">
                             <img src="menu_icons/formulario.svg" alt="alt"/>
                             <span>Formulario</span>
                         </a>
                     </div>
                 </nav>
-                <div class="flex">
-                    <div class="grid min-h-screen grid-rows-2">
-                        <div>
-                            <section class="pt-10 text-white">
-                                <p class="text-5xl">Spanish Ranking</p>
-                                <p class="pt-2 max-w-sm">
-                                    La mejor aplicación para el seguimiento de clanes
-                                    españoles durante la temporada de clan wars.
-                                </p>
-                            </section>
-                        </div>
+                <div class="grid min-h-screen grid-cols-3">
+                    <!-- <div class="grid min-h-screen grid-cols-3"> -->
+                    <div></div>
+                    <div>
+                        <section class="pt-10 text-white">
+                            <p class="text-center text-5xl">Spanish Ranking</p>
+                            <p class="text-center pt-2 max-w-full">
+                                Registrate
+                            </p>
+                        </section>
 
-                        <div>
-                            <section>vacio</section>
-                        </div>
+                        <form class="text-white pt-10 flex flex-col items-center">
+                            <div class="py-6">
+                                <p id="msgName">Nombre:</p>
+                                <input required class="text-black" id="name" type="text" name="name" />
+                                <span  id="spanName">*</span>
+                            </div>
 
+                            <div class="py-6">
+                                <p id="msgClave">* Contraseña:</p>
+                                <input class="text-black" required id="pass" type="password" name="clave" />
+                                <p class="text-red-500" id="spanClave"></p>
+                            </div>
+                        </form>
                     </div>
+
+                    <div>
+                    </div>
+
                 </div>
             </div>
-            <footer class="pie_menu z-1 static inset-x-0 bottom-0 h-20 items-center grid ">
-                <section class="text-center">
-                    Página creada por Sergious234 (saurio).<br>
-                    No copyright (considera regalarme un poco de oro).
-                </section>
-            </footer>
         </div>
+        <footer class="pie_menu z-1 static inset-x-0 bottom-0 h-20 items-center grid ">
+            <section class="text-center">
+                Página creada por Sergious234 (saurio).<br>
+                No copyright (considera regalarme un poco de oro).
+            </section>
+        </footer>
         <script src="https://cdn.tailwindcss.com"></script>
+        <script src="js/formulario_js.js"></script>
+
     </body>
 
 </html>
