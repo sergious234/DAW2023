@@ -67,3 +67,10 @@ body {
 .no-invert {
     filter: invert(0%) !important;
 }
+
+
+footer {
+    border-top-width: 1px;
+    border-top-style: solid;
+    border-top-color: #999999;
+}
