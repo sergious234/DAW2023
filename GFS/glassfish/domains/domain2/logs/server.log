@@ -6619,3 +6619,39 @@ Query: DataModifyQuery(name="SEQUENCE" sql="UPDATE SEQUENCE SET SEQ_COUNT = SEQ_
 [2023-11-06T22:02:59.543+0100] [glassfish 6.2] [INFO] [] [] [tid: _ThreadID=142 _ThreadName=Thread-7] [timeMillis: 1699304579543] [levelValue: 800] [[
   Hola]]
 
+[2023-11-06T22:05:54.624+0100] [glassfish 6.2] [INFO] [NCLS-CORE-00092] [jakarta.enterprise.system.core] [tid: _ThreadID=208 _ThreadName=Thread-47] [timeMillis: 1699304754624] [levelValue: 800] [[
+  Server shutdown initiated]]
+
+[2023-11-06T22:05:54.631+0100] [glassfish 6.2] [INFO] [NCLS-BOOTSTRAP-00028] [jakarta.enterprise.bootstrap] [tid: _ThreadID=208 _ThreadName=Thread-47] [timeMillis: 1699304754631] [levelValue: 800] [[
+  Unregistered com.sun.enterprise.glassfish.bootstrap.osgi.EmbeddedOSGiGlassFishImpl@232cce0 from service registry.]]
+
+[2023-11-06T22:05:54.632+0100] [glassfish 6.2] [INFO] [] [] [tid: _ThreadID=208 _ThreadName=Thread-7] [timeMillis: 1699304754632] [levelValue: 800] [[
+  FileMonitoring shutdown]]
+
+[2023-11-06T22:05:54.635+0100] [glassfish 6.2] [INFO] [NCLS-JMX-00002] [jakarta.enterprise.system.jmx] [tid: _ThreadID=208 _ThreadName=Thread-47] [timeMillis: 1699304754635] [levelValue: 800] [[
+  JMXStartupService: Stopped JMXConnectorServer: null]]
+
+[2023-11-06T22:05:54.635+0100] [glassfish 6.2] [INFO] [NCLS-JMX-00001] [jakarta.enterprise.system.jmx] [tid: _ThreadID=208 _ThreadName=Thread-47] [timeMillis: 1699304754635] [levelValue: 800] [[
+  JMXStartupService and JMXConnectors have been shut down.]]
+
+[2023-11-06T22:05:54.674+0100] [glassfish 6.2] [SEVERE] [] [jakarta.enterprise.web.util] [tid: _ThreadID=210 _ThreadName=RunLevelControllerThread-1699304754637] [timeMillis: 1699304754674] [levelValue: 1000] [[
+  The web application [] created a ThreadLocal with key of type [java.lang.ThreadLocal] (value [java.lang.ThreadLocal@92e85ae]) and a value of type [org.glassfish.admingui.theme.AdminguiThemeContext] (value [org.glassfish.admingui.theme.AdminguiThemeContext@4c67afde]) but failed to remove it when the web application was stopped. Threads are going to be renewed over time to try and avoid a probable memory leak.]]
+
+[2023-11-06T22:05:54.674+0100] [glassfish 6.2] [SEVERE] [] [jakarta.enterprise.web.util] [tid: _ThreadID=210 _ThreadName=RunLevelControllerThread-1699304754637] [timeMillis: 1699304754674] [levelValue: 1000] [[
+  The web application [] created a ThreadLocal with key of type [java.lang.ThreadLocal] (value [java.lang.ThreadLocal@92e85ae]) and a value of type [org.glassfish.admingui.theme.AdminguiThemeContext] (value [org.glassfish.admingui.theme.AdminguiThemeContext@4c67afde]) but failed to remove it when the web application was stopped. Threads are going to be renewed over time to try and avoid a probable memory leak.]]
+
+[2023-11-06T22:05:54.675+0100] [glassfish 6.2] [SEVERE] [] [jakarta.enterprise.web.util] [tid: _ThreadID=210 _ThreadName=RunLevelControllerThread-1699304754637] [timeMillis: 1699304754675] [levelValue: 1000] [[
+  The web application [] created a ThreadLocal with key of type [java.lang.ThreadLocal] (value [java.lang.ThreadLocal@92e85ae]) and a value of type [org.glassfish.admingui.theme.AdminguiThemeContext] (value [org.glassfish.admingui.theme.AdminguiThemeContext@4c67afde]) but failed to remove it when the web application was stopped. Threads are going to be renewed over time to try and avoid a probable memory leak.]]
+
+[2023-11-06T22:05:54.675+0100] [glassfish 6.2] [SEVERE] [] [jakarta.enterprise.web.util] [tid: _ThreadID=210 _ThreadName=RunLevelControllerThread-1699304754637] [timeMillis: 1699304754675] [levelValue: 1000] [[
+  The web application [] created a ThreadLocal with key of type [java.lang.ThreadLocal] (value [java.lang.ThreadLocal@92e85ae]) and a value of type [org.glassfish.admingui.theme.AdminguiThemeContext] (value [org.glassfish.admingui.theme.AdminguiThemeContext@4c67afde]) but failed to remove it when the web application was stopped. Threads are going to be renewed over time to try and avoid a probable memory leak.]]
+
+[2023-11-06T22:05:54.675+0100] [glassfish 6.2] [SEVERE] [] [jakarta.enterprise.web.util] [tid: _ThreadID=210 _ThreadName=RunLevelControllerThread-1699304754637] [timeMillis: 1699304754675] [levelValue: 1000] [[
+  The web application [] created a ThreadLocal with key of type [java.lang.ThreadLocal] (value [java.lang.ThreadLocal@92e85ae]) and a value of type [org.glassfish.admingui.theme.AdminguiThemeContext] (value [org.glassfish.admingui.theme.AdminguiThemeContext@4c67afde]) but failed to remove it when the web application was stopped. Threads are going to be renewed over time to try and avoid a probable memory leak.]]
+
+[2023-11-06T22:05:54.689+0100] [glassfish 6.2] [INFO] [] [] [tid: _ThreadID=210 _ThreadName=Thread-7] [timeMillis: 1699304754689] [levelValue: 800] [[
+  JdbcRuntimeExtension,  getAllSystemRAResourcesAndPools = [GlassFishConfigBean.org.glassfish.jdbc.config.JdbcResource, GlassFishConfigBean.org.glassfish.jdbc.config.JdbcResource, GlassFishConfigBean.org.glassfish.jdbc.config.JdbcConnectionPool, GlassFishConfigBean.org.glassfish.jdbc.config.JdbcConnectionPool, GlassFishConfigBean.org.glassfish.jdbc.config.JdbcConnectionPool, GlassFishConfigBean.org.glassfish.jdbc.config.JdbcResource, GlassFishConfigBean.org.glassfish.jdbc.config.JdbcConnectionPool, GlassFishConfigBean.org.glassfish.jdbc.config.JdbcResource, GlassFishConfigBean.org.glassfish.jdbc.config.JdbcConnectionPool, GlassFishConfigBean.org.glassfish.jdbc.config.JdbcResource]]]
+
+[2023-11-06T22:05:54.700+0100] [glassfish 6.2] [INFO] [ra.stop-successful] [javax.enterprise.resource.resourceadapter.com.sun.enterprise.connectors.service] [tid: _ThreadID=214 _ThreadName=Thread-53] [timeMillis: 1699304754700] [levelValue: 800] [[
+  RAR7094: __ds_jdbc_ra shutdown successful.]]
+
