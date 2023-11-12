@@ -9,7 +9,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import java.io.Serializable;
 
@@ -18,16 +17,24 @@ import java.io.Serializable;
  * @author sergio
  */
 @Entity
-@Table(name = "ROOT.TANKS")
+@Table(name = "TANKS")
 public class Tanque implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @SequenceGenerator(name = "SEQUENCE", sequenceName = "SEQUENCE")
     @Column(name = "ID_T")
     private Long id;
+
+    @Column(unique = true)
     private String nombre;
+
+    @Column(name = "dmg")
+    private int dmg;
+
+    @Column(name = "hp")
+    private int hp;
 
     public Long getId() {
         return id;
@@ -74,6 +81,34 @@ public class Tanque implements Serializable {
      */
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    /**
+     * @return the dmg
+     */
+    public int getDmg() {
+        return dmg;
+    }
+
+    /**
+     * @param dmg the dmg to set
+     */
+    public void setDmg(int dmg) {
+        this.dmg = dmg;
+    }
+
+    /**
+     * @return the hp
+     */
+    public int getHp() {
+        return hp;
+    }
+
+    /**
+     * @param hp the hp to set
+     */
+    public void setHp(int hp) {
+        this.hp = hp;
     }
 
 }

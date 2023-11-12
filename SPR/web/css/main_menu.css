@@ -7,13 +7,14 @@ Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/css.css to edit this t
     Author     : sergio
 */
 
+/*
 body {
     background-color: #111417;
 }
+*/
 
 .pie_menu {
     text-align: center;
-    background-color: #151A1D;
 }
 
 .pie_menu section {
@@ -23,8 +24,7 @@ body {
 
 .main_menu {
     float: left;
-    margin-right: 5rem;
-    background-color: #111417;
+    /*margin-right: 5rem;*/
     width: 2rem;
     border-right-width: 1px;
     border-right-style: solid;
