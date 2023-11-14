@@ -4,7 +4,7 @@
     Author     : sergio
 --%>
 
-<%@page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
+<%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@page import = "models.Tanque" %>
 <%@page language="java" import="java.util.List,java.lang.*" %> 
 <!DOCTYPE html>
@@ -104,28 +104,8 @@
                                         <th class="border w-24">VIDA</th>
                                     </tr>
                                 </thead>
-                                <tbody> 
-                                    <%
-                                        List<Tanque> tanques = (List<Tanque>) request.getAttribute("tanques_data");
-
-                                        if (tanques == null) {
-                                        return;
-                                        }
-                                        int contador = 0;
-                                        for (Tanque t : tanques) {
-                                            String id = "id=\"tank_rmv_" + contador + "\" ";
-                                            String id2 = "id=\"tank_id_" + contador + "\" ";
-                                            contador++;
-                                            out.println("<tr>");
-                                            out.println("<td " + id + "class=\"cursor-pointer border-spacing-x-2 font-black text-red-500\">  X  </td>");
-                                            out.println("<td> </td>");
-                                            out.println("<td " + id2 + "class=\"border\">"+ t.getId() +"</td>");
-                                            out.println("<td class=\"border\" >"+ t.getNombre() + "</td>");
-                                            out.println("<td class=\"border\" >"+ t.getDmg() +"</td>");
-                                            out.println("<td class=\"border\">"+ t.getHp() +"</td>");
-                                            out.println("</tr>");
-                                        }
-                                    %>
+                                <tbody id="table_body"> 
+                                    <%@include file="tank_table.jsp" %>
                                 </tbody>
                             </table>
                         </section>

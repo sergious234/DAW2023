@@ -148,20 +148,20 @@ public class tanque extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException {
-        //response.setContentType("text/html;charset=UTF-8");
+        response.setContentType("text/html;charset=UTF-8");
         String action = request.getPathInfo();
         String vista = "";
         switch (action) {
             case "/delete" -> {
                 String tank_id = request.getParameter("tank_id");
                 delete_tank(Optional.ofNullable(tank_id));
-                vista = "/tanks_crud.jsp";
+                vista = "/WEB-INF/jsps/tanks_crud.jsp";
             }
 
             case "/add" -> {
                 System.out.println("Add request");
                 add_tank(request);
-                vista = "/tanks_crud.jsp";
+                vista = "/WEB-INF/jsps/tanks_crud.jsp";
             }
 
             case "/get" -> {
@@ -174,14 +174,20 @@ public class tanque extends HttpServlet {
                 response.setHeader("tank_name", tanque.get().getNombre());
                 response.setIntHeader("tank_hp", tanque.get().getHp());
                 response.setIntHeader("tank_dmg", tanque.get().getDmg());
-                return;
+            }
+
+            case "/table" -> {
+                var q = em.createQuery("SELECT t FROM Tanque t", Tanque.class);
+                List<Tanque> tanques = (List<Tanque>) q.getResultList();
+                request.setAttribute("tanques_data", tanques);
+                vista = "/WEB-INF/jsps/tank_table.jsp";
             }
 
             case "/crud" -> {
                 var q = em.createQuery("SELECT t FROM Tanque t", Tanque.class);
                 List<Tanque> tanques = (List<Tanque>) q.getResultList();
                 request.setAttribute("tanques_data", tanques);
-                vista = "/tanks_crud.jsp";
+                vista = "/WEB-INF/jsps/tanks_crud.jsp";
                 //this.tabla_tanques(writter);
             }
 

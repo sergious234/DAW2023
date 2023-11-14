@@ -1,8 +1,11 @@
-package org.apache.jsp;
+package org.apache.jsp.WEB_002dINF.jsps;
 
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.jsp.*;
+import models.Tanque;
+import java.util.List;
+import java.lang.*;
 import models.Tanque;
 import java.util.List;
 import java.lang.*;
@@ -13,6 +16,11 @@ public final class tanks_005fcrud_jsp extends org.apache.jasper.runtime.HttpJspB
   private static final JspFactory _jspxFactory = JspFactory.getDefaultFactory();
 
   private static java.util.List<String> _jspx_dependants;
+
+  static {
+    _jspx_dependants = new java.util.ArrayList<String>(1);
+    _jspx_dependants.add("/WEB-INF/jsps/tank_table.jsp");
+  }
 
   private org.glassfish.jsp.api.ResourceInjector _jspx_resourceInjector;
 
@@ -33,7 +41,7 @@ public final class tanks_005fcrud_jsp extends org.apache.jasper.runtime.HttpJspB
     PageContext _jspx_page_context = null;
 
     try {
-      response.setContentType("text/html;charset=UTF-8");
+      response.setContentType("text/html; charset=UTF-8");
       response.setHeader("X-Powered-By", "JSP/2.3");
       pageContext = _jspxFactory.getPageContext(this, request, response,
       			null, true, 8192, true);
@@ -147,29 +155,36 @@ public final class tanks_005fcrud_jsp extends org.apache.jasper.runtime.HttpJspB
       out.write("                                        <th class=\"border w-24\">VIDA</th>\n");
       out.write("                                    </tr>\n");
       out.write("                                </thead>\n");
-      out.write("                                <tbody> \n");
+      out.write("                                <tbody id=\"table_body\"> \n");
       out.write("                                    ");
+      out.write("\n");
+      out.write("\n");
+      out.write("\n");
+      out.write(" \n");
+      out.write("\n");
+      out.write("\n");
 
-                                        List<Tanque> tanques = (List<Tanque>) request.getAttribute("tanques_data");
+    List<Tanque> tanques = (List<Tanque>) request.getAttribute("tanques_data");
+    if (tanques == null) {
+        return;
+    }
+    int contador = 0;
+    for (Tanque t : tanques) {
+        String id = "id=\"tank_rmv_" + contador + "\" ";
+        String id2 = "id=\"tank_id_" + contador + "\" ";
+        contador++;
+        out.println("<tr>");
+        out.println("<td " + id + "class=\"cursor-pointer border-spacing-x-2 font-black text-red-500\">  x  </td>");
+        out.println("<td> </td>");
+        out.println("<td " + id2 + "class=\"border\">"+ t.getId() +"</td>");
+        out.println("<td class=\"border\" >"+ t.getNombre() + "</td>");
+        out.println("<td class=\"border\" >"+ t.getDmg() +"</td>");
+        out.println("<td class=\"border\">"+ t.getHp() +"</td>");
+        out.println("</tr>");
+        }
 
-                                        if (tanques == null) {
-                                        return;
-                                        }
-                                        int contador = 0;
-                                        for (Tanque t : tanques) {
-                                            String id = "id=\"tank_rmv_" + contador + "\" ";
-                                            String id2 = "id=\"tank_id_" + contador + "\" ";
-                                            contador++;
-                                            out.println("<tr>");
-                                            out.println("<td " + id + "class=\"cursor-pointer border-spacing-x-2 font-black text-red-500\">  X  </td>");
-                                            out.println("<td> </td>");
-                                            out.println("<td " + id2 + "class=\"border\">"+ t.getId() +"</td>");
-                                            out.println("<td class=\"border\" >"+ t.getNombre() + "</td>");
-                                            out.println("<td class=\"border\" >"+ t.getDmg() +"</td>");
-                                            out.println("<td class=\"border\">"+ t.getHp() +"</td>");
-                                            out.println("</tr>");
-                                        }
-                                    
+      out.write('\n');
+      out.write(' ');
       out.write("\n");
       out.write("                                </tbody>\n");
       out.write("                            </table>\n");

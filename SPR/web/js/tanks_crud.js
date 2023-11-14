@@ -1,4 +1,25 @@
 
+let reload_tanks_table_body = function () {
+    
+    let body = document.getElementById("table_body");
+
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", "table", true);
+    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    xhr.onload = function () {
+        if (xhr.status >= 200 && xhr.status < 300) {
+            console.log(xhr.responseText)
+            body.innerHTML = xhr.responseText;
+        } else {
+            // La solicitud falló
+            alert("Hubo un fallo al recargar la tabla");
+        }
+    }
+
+    xhr.send(null);
+    
+}
+
 
 document.getElementById("update_tank_id").addEventListener("change", function () {
     var id = document.getElementById("update_tank_id").value;
@@ -44,11 +65,11 @@ document.addEventListener("DOMContentLoaded", function () {
                 xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
                 xhr.onload = function () {
                     if (xhr.status >= 200 && xhr.status < 300) {
-                        window.location.href = "crud";
+
+                        reload_tanks_table_body();
                     } else {
                         // La solicitud falló
                         alert("Hubo un fallo al procesar la solicitud");
-                        window.location.href = "crud";
                     }
                 }
 
@@ -83,12 +104,13 @@ document.getElementById("add_form").addEventListener("submit", function () {
         xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 
         xhr.onload = function () {
+            console.log(xhr.status);
             if (xhr.status >= 200 && xhr.status < 300) {
-                window.location.href = "crud";
+                //window.location.href = "crud";
+                reload_tanks_table_body();
             } else {
                 // La solicitud falló
                 alert("Hubo un fallo al procesar la solicitud");
-                window.location.href = "crud";
             }
         };
 
@@ -118,11 +140,12 @@ document.getElementById("update_form").addEventListener("submit", function () {
 
         xhr.onload = function () {
             if (xhr.status >= 200 && xhr.status < 300) {
-                window.location.href = "crud";
+                reload_tanks_table_body();
+                // window.location.href = "crud";
+
             } else {
                 // La solicitud falló
                 alert("Hubo un fallo al procesar la solicitud");
-                window.location.href = "crud";
             }
         };
 
