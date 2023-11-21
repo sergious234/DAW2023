@@ -174,6 +174,7 @@ public class tanque extends HttpServlet {
                 response.setHeader("tank_name", tanque.get().getNombre());
                 response.setIntHeader("tank_hp", tanque.get().getHp());
                 response.setIntHeader("tank_dmg", tanque.get().getDmg());
+                vista = "/WEB-INF/jsps/tank_table.jsp";
             }
 
             case "/table" -> {
@@ -197,7 +198,6 @@ public class tanque extends HttpServlet {
 
         var rd = request.getRequestDispatcher(vista);
         rd.forward(request, response);
-
     }
 
     /**
