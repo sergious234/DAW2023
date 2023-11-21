@@ -19,46 +19,9 @@
     <body class="bg-zinc-950">
        	<div class="flex flex-col">
             <div class="flex flex-row gap-x-32">
-                <nav class="main_menu basis-15 flex-initial space-y-4 pl-3 min-h-screen w-12">
-                    <div class="mt-3 mr-2">
-                        <a class="block space-x-3" href="https://github.com/sergious234">
-                            <img class="no-invert rounded-full" src="/SPR/menu_icons/Sergious.jpg" alt="alt"/>
-                            <span class="w-full justify-center text-center">
-                                Sergious
-                            </span>
-                        </a>
-                    </div>
-                    <div class="pt-20">
-                        <a class="inline flex space-x-3" href="ranking.html">
-                            <img src="/SPR/menu_icons/ranking.svg" alt="alt"/>
-                            <span class="inline">Ranking</span>
-                        </a>
-                    </div>
-                    <div>
-                        <a class="inline flex space-x-3" href="jugadores.html">
-                            <img src="/SPR/menu_icons/player.svg" alt="alt"/>
-                            <span>Jugadores</span>
-                        </a>
-                    </div>
-                    <div>
-                        <a class="inline flex space-x-3" href="tanques.html">
-                            <img src="/SPR/menu_icons/tank.svg" alt="alt"/>
-                            <span>Tanques</span>
-                        </a>
-                    </div>
-                    <div>
-                        <a class="inline flex space-x-3" href="clanes.html">
-                            <img src="/SPR/menu_icons/clan.svg" alt="alt"/>
-                            <span>Clanes</span>
-                        </a>
-                    </div>
-                    <div>
-                        <a class="inline flex space-x-3" href="clanes.html">
-                            <img src="/SPR/menu_icons/formulario.svg" alt="alt"/>
-                            <span>Formulario</span>
-                        </a>
-                    </div>
-                </nav>
+                <%@include file="nav_bar.jsp" %>
+
+                
                 <!--
                     En caso de que se empiece a ver
                     chungo cambiar el div por este otro:
@@ -134,12 +97,7 @@
                     </div>
                 </div>
             <!-- </div> -->
-            <footer class="pie_menu z-1 static inset-x-0 bottom-0 h-20 items-center grid ">
-                <section class="text-center">
-                    Página creada por Sergious234 (saurio).<br>
-                    No copyright (considera regalarme un poco de oro).
-                </section>
-            </footer>
+        <%@include file="nav_bar.jsp" %>
         </div>
         <script src="https://cdn.tailwindcss.com"></script>
         <script src="/SPR/js/tanks_crud.js"></script>

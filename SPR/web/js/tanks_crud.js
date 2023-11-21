@@ -1,6 +1,4 @@
-
 let reload_tanks_table_body = function () {
-    
     let body = document.getElementById("table_body");
 
     var xhr = new XMLHttpRequest();
@@ -8,23 +6,19 @@ let reload_tanks_table_body = function () {
     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     xhr.onload = function () {
         if (xhr.status >= 200 && xhr.status < 300) {
-            console.log(xhr.responseText)
+            console.log(xhr.responseText);
             body.innerHTML = xhr.responseText;
         } else {
             // La solicitud falló
             alert("Hubo un fallo al recargar la tabla");
         }
-    }
-
-    xhr.send(null);
-    
-}
-
+    };
+    xhr.send(null);  
+};
 
 document.getElementById("update_tank_id").addEventListener("change", function () {
     var id = document.getElementById("update_tank_id").value;
-
-
+    
     var xhr = new XMLHttpRequest();
     var queryString = "tank_id=" + encodeURIComponent(id);
     xhr.open("POST", "get", true);
@@ -42,7 +36,7 @@ document.getElementById("update_tank_id").addEventListener("change", function ()
             // La solicitud falló
             alert("Hubo un fallo al procesar la solicitud");
         }
-    }
+    };
 
     xhr.send(queryString);
 });
@@ -71,17 +65,17 @@ document.addEventListener("DOMContentLoaded", function () {
                         // La solicitud falló
                         alert("Hubo un fallo al procesar la solicitud");
                     }
-                }
+                };
 
                 xhr.send(queryString);
             } else {
                 // No borrar tanque
             }
-        }
+        };
         i++;
         tankElement = document.getElementById(`tank_rmv_${i}`);
     }
-})
+});
 
 document.getElementById("add_form").addEventListener("submit", function () {
     event.preventDefault();
