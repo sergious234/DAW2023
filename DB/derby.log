@@ -1,0 +1,20 @@
+Mon Nov 27 19:20:19 CET 2023 : Apache Derby Network Server - 10.14.2.0 - (1828579) started and ready to accept connections on port 1527
+----------------------------------------------------------------
+Mon Nov 27 19:20:28 CET 2023:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.14.2.0 - (1828579): instance a816c00e-018c-1202-bfbc-ffffb559d075 
+on database directory /home/sergio/DAW2023/DB/daw2023 with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@42110406 
+Loaded from file:/home/sergio/DAW2023/db-derby-10.14.2.0-bin/lib/derby.jar
+java.vendor=N/A
+java.runtime.version=17.0.9+8
+user.dir=/home/sergio/DAW2023/db-derby-10.14.2.0-bin
+os.name=Linux
+os.arch=amd64
+os.version=6.6.2-arch1-1
+derby.system.home=/home/sergio/DAW2023/DB
+Database Class Loader started - derby.database.classpath=''
+----------------------------------------------------------------
+Mon Nov 27 20:36:21 CET 2023: Shutting down Derby engine
+----------------------------------------------------------------
+Mon Nov 27 20:36:21 CET 2023:
+Shutting down instance a816c00e-018c-1202-bfbc-ffffb559d075 on database directory /home/sergio/DAW2023/DB/daw2023 with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@42110406 
+----------------------------------------------------------------
