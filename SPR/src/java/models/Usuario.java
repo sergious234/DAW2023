@@ -5,12 +5,12 @@
 package models;
 
 import jakarta.persistence.Column;
-import java.io.Serializable;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import java.io.Serializable;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -25,22 +25,36 @@ import java.util.logging.Logger;
 @Entity
 @Table(name = "USERS")
 public class Usuario implements Serializable {
-    
-     
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    
-    @Column(unique = true, name="user_name")
+
+    @Column(unique = true, name = "user_name")
     public String user_name;
-    
-    @Column(unique = true, name="email")
+
+    @Column(unique = true, name = "email")
     public String email;
-    
-    @Column(name="password")
+
+    @Column(name = "password")
     private String password;
-    
+
+    @Column(name = "perm_lvl")
+    private Integer perm_lvl = 0;
+
+    public static String encode_pass(String pass) {
+        try {
+            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+            byte[] hash = digest.digest(pass.getBytes(StandardCharsets.UTF_8));
+            String encoded = Base64.getEncoder().encodeToString(hash);
+            return encoded;
+        } catch (NoSuchAlgorithmException ex) {
+            Logger.getLogger(Usuario.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
     public void set_pass(String pass) {
         try {
             MessageDigest digest = MessageDigest.getInstance("SHA-256");
@@ -51,7 +65,6 @@ public class Usuario implements Serializable {
             Logger.getLogger(Usuario.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
 
     /**
      * @return the user_name
@@ -87,7 +100,7 @@ public class Usuario implements Serializable {
     public String getPassword() {
         return password;
     }
-    
+
     public Long getId() {
         return id;
     }
@@ -117,5 +130,12 @@ public class Usuario implements Serializable {
     public String toString() {
         return "models.Usuario[ id=" + id + " ]";
     }
-    
+
+    /**
+     * @return the perm_lvl
+     */
+    public Integer getPerm_lvl() {
+        return perm_lvl;
+    }
+
 }

@@ -7,20 +7,19 @@ package servlets;
 import jakarta.annotation.Resource;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
-import java.io.IOException;
-import java.io.PrintWriter;
+import jakarta.persistence.Query;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.transaction.UserTransaction;
+import java.io.IOException;
+import java.util.List;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import models.Tanque;
 import models.Usuario;
 
 /**
@@ -30,67 +29,37 @@ import models.Usuario;
 @WebServlet(name = "users", urlPatterns = {"/users/*"})
 public class users extends HttpServlet {
 
-     private static final Logger LOGGER = Logger.getLogger(tanque.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(tanque.class.getName());
 
     @PersistenceContext(unitName = "ServletJPAPU")
     private EntityManager em;
     @Resource
     private UserTransaction utx;
-    
-    /*
-    private Optional<Tanque> get_tank(HttpServletRequest request) {
-        var id_param = this.get_parameter(request, "tank_id");
 
-        if (id_param.isEmpty()) {
-            return Optional.empty();
-        }
-
-        // Java da asco
-        long id;
-        try {
-            id = Long.parseLong(id_param.get());
-        } catch (NumberFormatException e) {
-            return Optional.empty();
-        }
-
-        var tanque = find_by_pk(Tanque.class, id);
-        return tanque;
-
-    }
-    */
-    
-    private boolean add_user(HttpServletRequest request){
-         var user_name_param = this.get_parameter(request, "user_name");
-         var email_param = this.get_parameter(request, "email");
-         var password_param = this.get_parameter(request, "password");
+    private boolean add_user(HttpServletRequest request) {
+        var user_name_param = this.get_parameter(request, "signup_username");
+        var email_param = this.get_parameter(request, "signup_email");
+        var password_param = this.get_parameter(request, "signup_password");
 
         if (user_name_param.isEmpty() || email_param.isEmpty() || password_param.isEmpty()) {
             LOGGER.log(Level.SEVERE, "[ERROR] Faltan campos");
             return false;
         }
-        
+
         Pattern email_patt = Pattern.compile("^(.+)@(.+)$");
         if (!email_patt.matcher(email_param.get()).matches()) {
-            LOGGER.log(Level.SEVERE, "[ERROR] {0}", "Correo no valido");
+            LOGGER.log(Level.SEVERE, "[ERROR] {0}", ("Correo no valido: " + email_param.get()));
             return false;
         }
-        
-        /*
-        Pattern pass_patt = Pattern.compile("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\\\d)(?=.*[@#$%^&+=])[A-Za-z\\\\d@#$%^&+=]{10,}$");
-        if (!pass_patt.matcher(password_param.get()).matches()) {
-            LOGGER.log(Level.SEVERE, "[ERROR] {0}", "Contraseña no valida");
-            return false;
-        }
-        */
-        
+
         Usuario u = new Usuario();
         u.user_name = user_name_param.get();
         u.email = email_param.get();
         u.set_pass(password_param.get());
-        
-        return this.persist(u);       
+
+        return this.persist(u);
     }
-    
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -102,17 +71,36 @@ public class users extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        
+
         String action = request.getPathInfo();
-        String vista = "";
+        String vista;
         System.out.println(action);
+
         switch (action) {
             case "/add" -> {
-                System.out.println("Add request");
-                boolean success = add_user(request);
-                System.out.println(success);
+                boolean success = this.add_user(request);
                 vista = "/WEB-INF/jsps/formulario.jsp";
             }
+            case "/login" -> {
+                if (this.log_in(request)) {
+                    LOGGER.log(Level.INFO, "[INFO] {0}", ("Succesfull login"));
+                    request.getSession().setAttribute("user", request.getParameter("username"));
+                } else {
+                    LOGGER.log(Level.INFO, "[INFO] {0}", ("Succesfull login"));
+                    response.sendError(303);
+                }
+                vista = "/WEB-INF/jsps/formulario.jsp";
+            }
+            case "/close_session" -> {
+                request.getSession().removeAttribute("user");
+                vista = "/WEB-INF/jsps/home.jsp";
+            }
+
+            case "/config" -> {
+                LOGGER.log(Level.INFO, "[INFO] Conf");
+                vista = "/WEB-INF/jsps/user_conf/user_conf.jsp";
+            }
+
             case "/formulario" -> {
                 vista = "/WEB-INF/jsps/formulario.jsp";
             }
@@ -123,8 +111,8 @@ public class users extends HttpServlet {
         var rd = request.getRequestDispatcher(vista);
         rd.forward(request, response);
     }
-    
-     private Optional<String> get_parameter(HttpServletRequest request, String parameter) {
+
+    private Optional<String> get_parameter(HttpServletRequest request, String parameter) {
         var param = request.getParameter(parameter);
         if (param != null) {
             return Optional.of(param);
@@ -132,8 +120,8 @@ public class users extends HttpServlet {
             return Optional.empty();
         }
     }
-     
-      /**
+
+    /**
      *
      * @param <T>
      * @param entityClass Tipo a devolver
@@ -187,7 +175,7 @@ public class users extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+        throws ServletException, IOException {
         processRequest(request, response);
     }
 
@@ -201,7 +189,7 @@ public class users extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+        throws ServletException, IOException {
         processRequest(request, response);
     }
 
@@ -214,4 +202,34 @@ public class users extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
+    private boolean log_in(HttpServletRequest request) {
+        var username = request.getParameter("username");
+        var password = request.getParameter("password");
+
+        if (username == null || password == null) {
+            LOGGER.log(Level.SEVERE, "[ERROR] {0}", "Faltan campos");
+            return false;
+        }
+
+        Usuario u = findByUserName(username);
+
+        // No existe el usuario
+        if (u == null) {
+            return false;
+        }
+        return u.getPassword().equals(Usuario.encode_pass(password));
+    }
+
+    public Usuario findByUserName(String userName) {
+        String jpql = "SELECT u FROM Usuario u WHERE u.user_name = :userName";
+        Query query = em.createQuery(jpql);
+        query.setParameter("userName", userName);
+        List<Usuario> usuarios = query.getResultList();
+        if (!usuarios.isEmpty()) {
+            return usuarios.get(0);
+        } else {
+            return null;
+        }
+    }
 }

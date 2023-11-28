@@ -1,24 +1,52 @@
+var previous_button = document.getElementById("previous_page");
+var next_button = document.getElementById("next_page");
+var page = 0;
+
 let reload_tanks_table_body = function () {
-    let body = document.getElementById("table_body");
+    let body = document.getElementById("table_div");
 
     var xhr = new XMLHttpRequest();
     xhr.open("POST", "table", true);
     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     xhr.onload = function () {
         if (xhr.status >= 200 && xhr.status < 300) {
-            console.log(xhr.responseText);
             body.innerHTML = xhr.responseText;
+            previous_button = document.getElementById("previous_page");
+            next_button = document.getElementById("next_page");
+            reload_remove_tanks();
         } else {
             // La solicitud falló
             alert("Hubo un fallo al recargar la tabla");
         }
     };
-    xhr.send(null);  
+
+    let obj = JSON.stringify({"page": page});
+    console.log(obj)
+    xhr.send(obj);
+};
+
+let reload_prev_button = function () {
+    previous_button.addEventListener("click", function () {
+        page -= 1;
+        if (page < 0) {
+            page = 0;
+        }
+        document.getElementById("page_text").innerText = page;
+        reload_tanks_table_body();
+    });
+};
+
+let reload_next_button = function () {
+    next_button.addEventListener("click", function () {
+        page += 1;
+        reload_tanks_table_body();
+        document.getElementById("page_text").innerText = page;
+    });
 };
 
 document.getElementById("update_tank_id").addEventListener("change", function () {
     var id = document.getElementById("update_tank_id").value;
-    
+
     var xhr = new XMLHttpRequest();
     var queryString = "tank_id=" + encodeURIComponent(id);
     xhr.open("POST", "get", true);
@@ -41,10 +69,9 @@ document.getElementById("update_tank_id").addEventListener("change", function ()
     xhr.send(queryString);
 });
 
-document.addEventListener("DOMContentLoaded", function () {
+let reload_remove_tanks = function () {
     let i = 0;
     let tankElement = document.getElementById(`tank_rmv_${i}`);
-
     while (tankElement) {
         let tankIdElement = document.getElementById(`tank_id_${i}`);
         tankElement.onclick = function () {
@@ -75,6 +102,13 @@ document.addEventListener("DOMContentLoaded", function () {
         i++;
         tankElement = document.getElementById(`tank_rmv_${i}`);
     }
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+    reload_next_button();
+    reload_prev_button();
+    document.getElementById("page_text").innerText = page;
+    reload_remove_tanks();
 });
 
 document.getElementById("add_form").addEventListener("submit", function () {
@@ -123,11 +157,13 @@ document.getElementById("update_form").addEventListener("submit", function () {
         var tank_name = document.getElementById("new_tank_name").value;
         var tank_dmg = document.getElementById("new_tank_dmg").value;
         var tank_hp = document.getElementById("new_tank_hp").value;
+        var tank_id = document.getElementById("update_tank_id").value;
 
         var xhr = new XMLHttpRequest();
         var queryString = 'tank_name=' + encodeURIComponent(tank_name)
                 + '&tank_dmg=' + encodeURIComponent(tank_dmg)
-                + '&tank_hp=' + encodeURIComponent(tank_hp);
+                + '&tank_hp=' + encodeURIComponent(tank_hp)
+                + '&tank_id=' + encodeURIComponent(tank_id);
 
         xhr.open("POST", "update", true);
         xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");

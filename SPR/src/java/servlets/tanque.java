@@ -14,11 +14,14 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.transaction.UserTransaction;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import models.Tanque;
+import org.json.JSONObject;
+import warg_api.Tankopedia;
 
 /**
  *
@@ -137,6 +140,76 @@ public class tanque extends HttpServlet {
         return false;
     }
 
+    private boolean update_tank(HttpServletRequest request) {
+        var name_param = this.get_parameter(request, "tank_name");
+
+        var dmg_param = this.get_parameter(request, "tank_dmg").map(e -> {
+            try {
+                var x = Integer.parseInt(e.trim());
+                if (x > 0) {
+                    return x;
+                } else {
+                    return null;
+                }
+            } catch (NumberFormatException err) {
+                LOGGER.log(Level.SEVERE, "[ERROR] No se pudo obtener el dmg: {0}", err.toString());
+                LOGGER.log(Level.INFO, "[INFO] dmg_paran: {0}", e);
+                return null;
+            }
+        });
+
+        var hp_param = this.get_parameter(request, "tank_hp").map(v -> {
+            try {
+                Integer hp = Integer.valueOf(v.trim());
+                if (hp < 0) {
+                    return null;
+                } else {
+                    return hp;
+                }
+            } catch (NumberFormatException e) {
+                LOGGER.log(Level.SEVERE, "[ERROR] {0}", e.toString());
+                return null;
+            }
+        });
+
+        var id_param = this.get_parameter(request, "tank_id").map(v -> {
+            try {
+                return Long.parseLong(v.trim());
+            } catch (NumberFormatException _e) {
+                return null;
+            }
+        });
+
+        if (id_param.isEmpty()
+            || name_param.isEmpty() || dmg_param.isEmpty() || hp_param.isEmpty()) {
+            LOGGER.severe("[ERROR] " + "Faltan campos por rellenar");
+            LOGGER.info(name_param.toString());
+            LOGGER.info(dmg_param.toString());
+            LOGGER.info(hp_param.toString());
+            return false;
+        }
+
+        var t = this.find_by_pk(Tanque.class, id_param.get());
+
+        if (t.isEmpty()) {
+            return false;
+        }
+
+        t.ifPresent(e
+            -> {
+            e.setNombre(name_param.get());
+            e.setHp(hp_param.get());
+            e.setDmg(dmg_param.get());
+        }
+        );
+
+        this.update(t.get());
+        System.out.println(
+            "Good update");
+
+        return true;
+    }
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -146,12 +219,27 @@ public class tanque extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-        throws ServletException, IOException {
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         response.setContentType("text/html;charset=UTF-8");
         String action = request.getPathInfo();
         String vista = "";
         switch (action) {
+            case "/add_defaults" -> {
+                LOGGER.log(Level.INFO, "Adding default tanks by WRG");
+                Tankopedia tp = new Tankopedia();
+                List<Tanque> tanques = tp.get_tanks();
+                for (var t : tanques) {
+                    this.persist(t);
+                }
+                request.setAttribute("tanques_data", tanques.stream().limit(10).toList());
+                vista = "/WEB-INF/jsps/tanks_crud.jsp";
+            }
+
+            case "/update" -> {
+                this.update_tank(request);
+                vista = "/WEB-INF/jsps/tanks_crud.jsp";
+            }
+
             case "/delete" -> {
                 String tank_id = request.getParameter("tank_id");
                 delete_tank(Optional.ofNullable(tank_id));
@@ -178,14 +266,29 @@ public class tanque extends HttpServlet {
             }
 
             case "/table" -> {
-                var q = em.createQuery("SELECT t FROM Tanque t", Tanque.class);
+                String str_body = new String(request.getInputStream().readAllBytes(), StandardCharsets.UTF_8);
+                JSONObject body = new JSONObject(str_body);
+                int page = body.getInt("page");
+
+                System.out.println("Page: " + page);
+                var q = em.createQuery("SELECT t FROM Tanque t", Tanque.class
+                );
+                q.setFirstResult(10 * page);
+                q.setMaxResults(10);
                 List<Tanque> tanques = (List<Tanque>) q.getResultList();
                 request.setAttribute("tanques_data", tanques);
+                request.setAttribute("page", page);
                 vista = "/WEB-INF/jsps/tank_table.jsp";
+
             }
 
             case "/crud" -> {
-                var q = em.createQuery("SELECT t FROM Tanque t", Tanque.class);
+                var q = em.createQuery("SELECT t FROM Tanque t", Tanque.class
+                );
+                Integer start = (0);
+                System.out.println(start);
+                q.setFirstResult(start);
+                q.setMaxResults(10);
                 List<Tanque> tanques = (List<Tanque>) q.getResultList();
                 request.setAttribute("tanques_data", tanques);
                 vista = "/WEB-INF/jsps/tanks_crud.jsp";
@@ -193,7 +296,7 @@ public class tanque extends HttpServlet {
             }
 
             default ->
-                response.getWriter().println("Default");
+                vista = "/WEB-INF/jsps/tanks_crud.jsp";
         }
 
         var rd = request.getRequestDispatcher(vista);
@@ -221,6 +324,19 @@ public class tanque extends HttpServlet {
             utx.begin();
             Object object = em.merge(obj);
             em.remove(object);
+            utx.commit();
+            System.out.println("Transaccion realizada con exito");
+            return true;
+        } catch (Exception e) {
+            LOGGER.log(Level.SEVERE, "[Error]: {0}", e.toString());
+            return false;
+        }
+    }
+
+    private boolean update(Object object) {
+        try {
+            utx.begin();
+            em.merge(object);
             utx.commit();
             System.out.println("Transaccion realizada con exito");
             return true;
