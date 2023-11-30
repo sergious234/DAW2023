@@ -29,8 +29,8 @@ document.getElementById("send_login_button").addEventListener("click", function 
     xhr.onload = function () {
         console.log(xhr.status);
         if (xhr.status >= 200 && xhr.status < 300) {
-            //window.location.href = "crud";
             alert("Sesion iniciada con exito!")
+            window.location.href = "/SPR/home";
         } else {
             // La solicitud falló
             alert("Hubo un fallo al procesar la solicitud");

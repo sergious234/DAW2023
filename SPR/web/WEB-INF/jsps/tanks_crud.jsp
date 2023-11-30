@@ -14,6 +14,7 @@
     <head>
         <title>CRUD</title>
         <meta charset="UTF-8">
+        <script src="https://cdn.tailwindcss.com"></script>
         <!--<meta name="viewport" content="width=device-width, initial-scale=1.0">-->
         <link rel="stylesheet" type="text/css" href="/SPR/css/main_menu.css"/>
     </head>
@@ -104,7 +105,6 @@
             <!-- </div> -->
             <%@include file="footer.jsp" %>
         </div>
-        <script src="https://cdn.tailwindcss.com"></script>
         <script src="/SPR/js/tanks_crud.js"></script>
     </body>
 </html>

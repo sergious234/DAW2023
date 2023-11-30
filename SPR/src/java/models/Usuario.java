@@ -69,7 +69,7 @@ public class Usuario implements Serializable {
     /**
      * @return the user_name
      */
-    public String getUser_name() {
+    public String get_user_name() {
         return user_name;
     }
 
@@ -134,8 +134,8 @@ public class Usuario implements Serializable {
     /**
      * @return the perm_lvl
      */
-    public Integer getPerm_lvl() {
-        return perm_lvl;
+    public PermLvls get_perm_lvl() {
+        return PermLvls.from_int(perm_lvl);
     }
 
 }

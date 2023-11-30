@@ -8,9 +8,10 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>SR</title>
+        <title>Home</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="https://cdn.tailwindcss.com"></script>
         <link rel="stylesheet" type="text/css" href="css/main_menu.css"/>
     </head>
     <body class="bg-zinc-950">
@@ -37,7 +38,6 @@
             </div>
             <%@include file="../footer.jsp" %>
         </div>
-        <script src="https://cdn.tailwindcss.com"></script>
     </body>
 
 </html>

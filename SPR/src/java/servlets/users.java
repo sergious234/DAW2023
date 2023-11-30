@@ -27,9 +27,10 @@ import models.Usuario;
  * @author usuario
  */
 @WebServlet(name = "users", urlPatterns = {"/users/*"})
-public class users extends HttpServlet {
+public class users extends HttpServlet implements servlet_utils {
 
-    private static final Logger LOGGER = Logger.getLogger(tanque.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(users.class.getName());
+    private static final String USER_SESSION_ATTR = "user";
 
     @PersistenceContext(unitName = "ServletJPAPU")
     private EntityManager em;
@@ -74,7 +75,6 @@ public class users extends HttpServlet {
 
         String action = request.getPathInfo();
         String vista;
-        System.out.println(action);
 
         switch (action) {
             case "/add" -> {
@@ -82,23 +82,42 @@ public class users extends HttpServlet {
                 vista = "/WEB-INF/jsps/formulario.jsp";
             }
             case "/login" -> {
+                if (this.get_session_attr(request, USER_SESSION_ATTR).isPresent()) {
+                    response.sendRedirect("/SPR/home");
+                    return;
+                }
+
                 if (this.log_in(request)) {
                     LOGGER.log(Level.INFO, "[INFO] {0}", ("Succesfull login"));
-                    request.getSession().setAttribute("user", request.getParameter("username"));
+                    request.getSession().setAttribute(USER_SESSION_ATTR, request.getParameter("username"));
                 } else {
-                    LOGGER.log(Level.INFO, "[INFO] {0}", ("Succesfull login"));
+                    LOGGER.log(Level.INFO, "[INFO] {0}", ("Error login"));
                     response.sendError(303);
+                    return;
                 }
                 vista = "/WEB-INF/jsps/formulario.jsp";
             }
             case "/close_session" -> {
-                request.getSession().removeAttribute("user");
-                vista = "/WEB-INF/jsps/home.jsp";
+                request.getSession().invalidate();
+                request.getAttributeNames()
+                    .asIterator()
+                    .forEachRemaining(e -> request.removeAttribute(e));
+                LOGGER.log(Level.INFO, "[INFO] Closing session");
+                vista = "/WEB-INF/jsps/home/home.jsp";
             }
 
             case "/config" -> {
-                LOGGER.log(Level.INFO, "[INFO] Conf");
-                vista = "/WEB-INF/jsps/user_conf/user_conf.jsp";
+                var user_attr = this.get_session_attr(request, USER_SESSION_ATTR);
+                if (user_attr.isPresent()) {
+                    LOGGER.log(Level.INFO, "[INFO] Conf");
+                    var user_obj = this.findByUserName(user_attr.get());
+                    request.setAttribute("user_obj", user_obj);
+                    vista = "/WEB-INF/jsps/user_conf/user_conf.jsp";
+                } else {
+                    LOGGER.log(Level.INFO, "[INFO] User not identified, redirecting to home");
+                    response.sendRedirect("/SPR/home");
+                    return;
+                }
             }
 
             case "/formulario" -> {
@@ -108,6 +127,7 @@ public class users extends HttpServlet {
                 vista = "/WEB-INF/jsps/formulario.jsp";
             }
         }
+
         var rd = request.getRequestDispatcher(vista);
         rd.forward(request, response);
     }
@@ -221,6 +241,7 @@ public class users extends HttpServlet {
         return u.getPassword().equals(Usuario.encode_pass(password));
     }
 
+    @Override
     public Usuario findByUserName(String userName) {
         String jpql = "SELECT u FROM Usuario u WHERE u.user_name = :userName";
         Query query = em.createQuery(jpql);

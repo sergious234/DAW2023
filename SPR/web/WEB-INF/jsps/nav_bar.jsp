@@ -1,9 +1,3 @@
-<%-- 
-    Document   : nav_bar
-    Created on : 14 nov 2023, 17:58:57
-    Author     : usuario
---%>
-
 
 <nav class="main_menu text-white space-y-4 pl-3 min-h-screen w-12">
     <div class="mt-3 mr-2">
@@ -15,19 +9,7 @@
         </a>
     </div>
 
-    <% 
-        String user = (String) request.getSession().getAttribute("user");
-        if (user != null) {
-        
-        out.println("<div class=\"pt-20\">"
-           + "<a class=\"inline flex space-x-3\" href=\"/SPR/users/config\">"
-           + "<img src=\"/SPR/menu_icons/config.svg\" alt=\"alt\"/>"
-           + "<span class=\"truncate\">" + user + "</span>"
-           + "</a>"
-            + "</div>");
-        }
     
-    %>
     
     <div class="pt-20">
         <a class="inline flex space-x-3" href="/SPR/home">
@@ -59,10 +41,24 @@
             <span>Clanes</span>
         </a>
     </div>
-    <div>
-        <a class="inline flex space-x-3" href="/SPR/users/">
-            <img src="/SPR/menu_icons/formulario.svg" alt="alt"/>
-            <span>Formulario</span>
-        </a>
-    </div>
+    <% 
+        String user = (String) request.getSession().getAttribute("user");
+        if (user != null) {
+        
+            out.println("<div>"
+               + "<a class=\"inline flex space-x-3\" href=\"/SPR/users/config\">"
+               + "<img src=\"/SPR/menu_icons/config.svg\" alt=\"alt\"/>"
+               + "<span class=\"truncate\">" + user + "</span>"
+               + "</a>"
+                + "</div>");
+        } else {
+            String x = " <div> "
+               + "     <a class=\"inline flex space-x-3\" href=\"/SPR/users/formulario\">"
+               + "         <img src=\"/SPR/menu_icons/formulario.svg\" alt=\"alt\"/>"
+               + "         <span>Formulario</span>"
+               + "     </a>"
+               + " </div>";
+            out.println(x);
+        }
+    %>
 </nav>

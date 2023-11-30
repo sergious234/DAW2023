@@ -11,6 +11,7 @@
     <head>
         <title>SR</title>
         <meta charset="UTF-8">
+        <script src="https://cdn.tailwindcss.com"></script>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" type="text/css" href="/SPR/css/main_menu.css"/>
     </head>
@@ -83,7 +84,6 @@
             <%@include file="footer.jsp" %>
         </div>
 
-        <script src="https://cdn.tailwindcss.com"></script>
         <script src="/SPR/js/formulario.js"></script>
     </body> 
 </html>

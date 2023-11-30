@@ -7,6 +7,7 @@ package servlets;
 import jakarta.annotation.Resource;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.Query;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -20,6 +21,7 @@ import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import models.Tanque;
+import models.Usuario;
 import org.json.JSONObject;
 import warg_api.Tankopedia;
 
@@ -28,7 +30,7 @@ import warg_api.Tankopedia;
  * @author sergio
  */
 @WebServlet(name = "tanque", urlPatterns = {"/tanque/*"})
-public class tanque extends HttpServlet {
+public class tanque extends HttpServlet implements servlet_utils {
 
     private static final Logger LOGGER = Logger.getLogger(tanque.class.getName());
 
@@ -225,6 +227,10 @@ public class tanque extends HttpServlet {
         String vista = "";
         switch (action) {
             case "/add_defaults" -> {
+                if (!current_user_is_admin(request)) {
+                    response.sendRedirect("/SPR/home");
+                    return;
+                }
                 LOGGER.log(Level.INFO, "Adding default tanks by WRG");
                 Tankopedia tp = new Tankopedia();
                 List<Tanque> tanques = tp.get_tanks();
@@ -283,8 +289,13 @@ public class tanque extends HttpServlet {
             }
 
             case "/crud" -> {
-                var q = em.createQuery("SELECT t FROM Tanque t", Tanque.class
-                );
+                if (!current_user_is_admin(request)) {
+                    LOGGER.log(Level.SEVERE, "User is not admin");
+                    response.sendRedirect("/SPR/home");
+                    return;
+                }
+
+                var q = em.createQuery("SELECT t FROM Tanque t", Tanque.class);
                 Integer start = (0);
                 System.out.println(start);
                 q.setFirstResult(start);
@@ -356,6 +367,19 @@ public class tanque extends HttpServlet {
         } catch (Exception e) {
             LOGGER.log(Level.SEVERE, "[Error]: {0}", e.toString());
             return false;
+        }
+    }
+
+    @Override
+    public Usuario findByUserName(String userName) {
+        String jpql = "SELECT u FROM Usuario u WHERE u.user_name = :userName";
+        Query query = em.createQuery(jpql);
+        query.setParameter("userName", userName);
+        List<Usuario> usuarios = query.getResultList();
+        if (!usuarios.isEmpty()) {
+            return usuarios.get(0);
+        } else {
+            return null;
         }
     }
 
