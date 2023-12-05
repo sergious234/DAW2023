@@ -1,9 +1,3 @@
-<%-- 
-    Document   : home
-    Created on : Nov 21, 2023, 7:47:09 PM
-    Author     : sergio
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
