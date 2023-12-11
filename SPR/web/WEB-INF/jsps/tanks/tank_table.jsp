@@ -1,14 +1,5 @@
-<%-- 
-    Document   : tank_table
-    Created on : Nov 13, 2023, 6:46:20 PM
-    Author     : sergio
---%>
-
 <%@page import = "models.Tanque" %>
 <%@page language="java" import="java.util.List,java.lang.*" %> 
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-
-
 <table class="table-fixed">
     <thead>
         <tr>
@@ -16,7 +7,7 @@
             <th class="min-w-[2.0rem]">    </th>
             <th class="border w-14">ID</th>
             <th class="border w-52">NOMBRE</th>
-            <th class="border w-24">DAÃ‘O</th>
+            <th class="border w-24">DAÑO</th>
             <th class="border w-24">VIDA</th>
         </tr>
     </thead>

@@ -54,7 +54,7 @@ public class users extends HttpServlet implements servlet_utils {
         }
 
         Usuario u = new Usuario();
-        u.user_name = user_name_param.get();
+        u.userName = user_name_param.get();
         u.email = email_param.get();
         u.set_pass(password_param.get());
 
@@ -78,9 +78,9 @@ public class users extends HttpServlet implements servlet_utils {
 
         switch (action) {
             case "/add" -> {
-                boolean success = this.add_user(request);
                 vista = "/WEB-INF/jsps/formulario.jsp";
             }
+
             case "/login" -> {
                 if (this.get_session_attr(request, USER_SESSION_ATTR).isPresent()) {
                     response.sendRedirect("/SPR/home");
@@ -123,6 +123,19 @@ public class users extends HttpServlet implements servlet_utils {
             case "/formulario" -> {
                 vista = "/WEB-INF/jsps/formulario.jsp";
             }
+            
+            case "/list" -> {
+                var q = em.createQuery("SELECT t FROM Usuario t", Usuario.class);
+                Integer start = (0);
+                System.out.println(start);
+                q.setFirstResult(start);
+                q.setMaxResults(10);
+                List<Usuario> tanques = (List<Usuario>) q.getResultList();
+                request.setAttribute("users_data", tanques);
+                
+                vista = "/WEB-INF/jsps/users/users_list.jsp";
+            }
+            
             default -> {
                 vista = "/WEB-INF/jsps/formulario.jsp";
             }
@@ -240,17 +253,9 @@ public class users extends HttpServlet implements servlet_utils {
         }
         return u.getPassword().equals(Usuario.encode_pass(password));
     }
-
+    
     @Override
-    public Usuario findByUserName(String userName) {
-        String jpql = "SELECT u FROM Usuario u WHERE u.user_name = :userName";
-        Query query = em.createQuery(jpql);
-        query.setParameter("userName", userName);
-        List<Usuario> usuarios = query.getResultList();
-        if (!usuarios.isEmpty()) {
-            return usuarios.get(0);
-        } else {
-            return null;
-        }
+    public EntityManager getEntityManager() {
+        return this.em;
     }
 }

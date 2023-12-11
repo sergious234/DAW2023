@@ -19,7 +19,7 @@
                         Usuario user_obj = (Usuario) request.getAttribute("user_obj");
                         out.println("<a class=\"space-x-3 text-white pt-4 text-lg\">" 
                             + "Bienvenido "
-                            + user_obj.get_user_name() + " !"
+                            + user_obj.getUserName() + " !"
                             + "</a>");
 
                         out.println("<a class=\"space-x-3 text-white pt-4 text-lg\">" 
@@ -27,7 +27,6 @@
                             + user_obj.get_perm_lvl()
                             + "</a>");
                     %>
-
                     <div class="pt-20 max-w-fit">
                         <a class="inline flex space-x-3 bg-red-500 rounded-lg text-lg px-3">
                             <button id="close_session_button" class="">Cerrar sesión</button>

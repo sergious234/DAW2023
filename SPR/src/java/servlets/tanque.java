@@ -238,24 +238,24 @@ public class tanque extends HttpServlet implements servlet_utils {
                     this.persist(t);
                 }
                 request.setAttribute("tanques_data", tanques.stream().limit(10).toList());
-                vista = "/WEB-INF/jsps/tanks_crud.jsp";
+                vista = "/WEB-INF/jsps/tanks/tanks_crud.jsp";
             }
 
             case "/update" -> {
                 this.update_tank(request);
-                vista = "/WEB-INF/jsps/tanks_crud.jsp";
+                vista = "/WEB-INF/jsps/tanks/tanks_crud.jsp";
             }
 
             case "/delete" -> {
                 String tank_id = request.getParameter("tank_id");
                 delete_tank(Optional.ofNullable(tank_id));
-                vista = "/WEB-INF/jsps/tanks_crud.jsp";
+                vista = "/WEB-INF/jsps/tanks/tanks_crud.jsp";
             }
 
             case "/add" -> {
                 System.out.println("Add request");
                 add_tank(request);
-                vista = "/WEB-INF/jsps/tanks_crud.jsp";
+                vista = "/WEB-INF/jsps/tanks/tanks_crud.jsp";
             }
 
             case "/get" -> {
@@ -268,7 +268,7 @@ public class tanque extends HttpServlet implements servlet_utils {
                 response.setHeader("tank_name", tanque.get().getNombre());
                 response.setIntHeader("tank_hp", tanque.get().getHp());
                 response.setIntHeader("tank_dmg", tanque.get().getDmg());
-                vista = "/WEB-INF/jsps/tank_table.jsp";
+                vista = "/WEB-INF/jsps/tanks/tank_table.jsp";
             }
 
             case "/table" -> {
@@ -284,7 +284,7 @@ public class tanque extends HttpServlet implements servlet_utils {
                 List<Tanque> tanques = (List<Tanque>) q.getResultList();
                 request.setAttribute("tanques_data", tanques);
                 request.setAttribute("page", page);
-                vista = "/WEB-INF/jsps/tank_table.jsp";
+                vista = "/WEB-INF/jsps/tanks/tank_table.jsp";
 
             }
 
@@ -302,12 +302,12 @@ public class tanque extends HttpServlet implements servlet_utils {
                 q.setMaxResults(10);
                 List<Tanque> tanques = (List<Tanque>) q.getResultList();
                 request.setAttribute("tanques_data", tanques);
-                vista = "/WEB-INF/jsps/tanks_crud.jsp";
+                vista = "/WEB-INF/jsps/tanks/tanks_crud.jsp";
                 //this.tabla_tanques(writter);
             }
 
             default ->
-                vista = "/WEB-INF/jsps/tanks_crud.jsp";
+                vista = "/WEB-INF/jsps/tanks/tanks_crud.jsp";
         }
 
         var rd = request.getRequestDispatcher(vista);
@@ -370,20 +370,7 @@ public class tanque extends HttpServlet implements servlet_utils {
         }
     }
 
-    @Override
-    public Usuario findByUserName(String userName) {
-        String jpql = "SELECT u FROM Usuario u WHERE u.user_name = :userName";
-        Query query = em.createQuery(jpql);
-        query.setParameter("userName", userName);
-        List<Usuario> usuarios = query.getResultList();
-        if (!usuarios.isEmpty()) {
-            return usuarios.get(0);
-        } else {
-            return null;
-        }
-    }
-
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+        // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -421,4 +408,9 @@ public class tanque extends HttpServlet implements servlet_utils {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
+    @Override
+    public EntityManager getEntityManager() {
+        return this.em;
+    }
 }

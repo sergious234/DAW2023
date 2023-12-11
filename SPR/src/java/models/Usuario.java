@@ -32,7 +32,7 @@ public class Usuario implements Serializable {
     private Long id;
 
     @Column(unique = true, name = "user_name")
-    public String user_name;
+    public String userName;
 
     @Column(unique = true, name = "email")
     public String email;
@@ -69,15 +69,15 @@ public class Usuario implements Serializable {
     /**
      * @return the user_name
      */
-    public String get_user_name() {
-        return user_name;
+    public String getUserName() {
+        return userName;
     }
 
     /**
-     * @param user_name the user_name to set
+     * @param userName the user_name to set
      */
-    public void setUser_name(String user_name) {
-        this.user_name = user_name;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     /**
@@ -131,11 +131,13 @@ public class Usuario implements Serializable {
         return "models.Usuario[ id=" + id + " ]";
     }
 
-    /**
-     * @return the perm_lvl
-     */
+    
     public PermLvls get_perm_lvl() {
         return PermLvls.from_int(perm_lvl);
+    }
+    
+    public boolean is_admin() {
+        return PermLvls.ADMIN.value == perm_lvl;
     }
 
 }

@@ -1,4 +1,3 @@
-
 <nav class="main_menu text-white space-y-4 pl-3 min-h-screen w-12">
     <div class="mt-3 mr-2">
         <a class="block space-x-3" href="https://github.com/sergious234">
@@ -14,31 +13,31 @@
     <div class="pt-20">
         <a class="inline flex space-x-3" href="/SPR/home">
             <img src="/SPR/menu_icons/home.svg" alt="alt"/>
-            <span>Home</span>
+            <span class="truncate">Home</span>
         </a>
     </div>
     <div>
         <a class="inline flex space-x-3" href="ranking.html">
             <img src="/SPR/menu_icons/ranking.svg" alt="alt"/>
-            <span class="inline">Ranking</span>
+            <span  class="truncate">Ranking</span>
         </a>
     </div>
     <div>
-        <a class="inline flex space-x-3" href="jugadores.html">
+        <a class="inline flex space-x-3" href="/SPR/users/list">
             <img src="/SPR/menu_icons/player.svg" alt="alt"/>
-            <span>Jugadores</span>
+            <span class="truncate">Jugadores</span>
         </a>
     </div>
     <div>
         <a class="inline flex space-x-3" href="/SPR/tanque/crud">
             <img src="/SPR/menu_icons/tank.svg" alt="alt"/>
-            <span>Tanques</span>
+            <span class="truncate">Tanques</span>
         </a>
     </div>
     <div>
         <a class="inline flex space-x-3" href="clanes.html">
             <img src="/SPR/menu_icons/clan.svg" alt="alt"/>
-            <span>Clanes</span>
+            <span class="truncate" >Clanes</span>
         </a>
     </div>
     <% 
