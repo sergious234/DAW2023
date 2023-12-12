@@ -31,6 +31,7 @@ public class users extends HttpServlet implements servlet_utils {
 
     private static final Logger LOGGER = Logger.getLogger(users.class.getName());
     private static final String USER_SESSION_ATTR = "user";
+    private static final String USER_OBJ_ATTR = "user_obj";
 
     @PersistenceContext(unitName = "ServletJPAPU")
     private EntityManager em;
@@ -75,9 +76,13 @@ public class users extends HttpServlet implements servlet_utils {
 
         String action = request.getPathInfo();
         String vista;
-
         switch (action) {
             case "/add" -> {
+                if (this.add_user(request)) {
+                    LOGGER.log(Level.INFO, "Usuario creado correctamente");
+                } else {
+                    LOGGER.log(Level.SEVERE, "Fallo al crear el usuario");
+                }
                 vista = "/WEB-INF/jsps/formulario.jsp";
             }
 
@@ -90,6 +95,14 @@ public class users extends HttpServlet implements servlet_utils {
                 if (this.log_in(request)) {
                     LOGGER.log(Level.INFO, "[INFO] {0}", ("Succesfull login"));
                     request.getSession().setAttribute(USER_SESSION_ATTR, request.getParameter("username"));
+                    
+                    var username = this.get_parameter(request, "username");
+                    if (username.isPresent()) {
+                        var user = this.findByUserName(username.get().trim());
+                        System.out.println(user == null);
+                        if(user != null)
+                            request.getSession().setAttribute(USER_OBJ_ATTR, user);
+                    }
                 } else {
                     LOGGER.log(Level.INFO, "[INFO] {0}", ("Error login"));
                     response.sendError(303);
@@ -251,6 +264,8 @@ public class users extends HttpServlet implements servlet_utils {
         if (u == null) {
             return false;
         }
+        
+        System.out.println(u.get_perm_lvl());
         return u.getPassword().equals(Usuario.encode_pass(password));
     }
     

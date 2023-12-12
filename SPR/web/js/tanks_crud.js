@@ -21,7 +21,7 @@ let reload_tanks_table_body = function () {
     };
 
     let obj = JSON.stringify({"page": page});
-    console.log(obj)
+    console.log(obj);
     xhr.send(obj);
 };
 

@@ -134,12 +134,9 @@ public class tanque extends HttpServlet implements servlet_utils {
         }
 
         Tanque tanque = res.get();
-
         //em.getTransaction().commit();
-        if (this.remove(tanque)) {
-            return true;
-        }
-        return false;
+
+        return this.remove(tanque);
     }
 
     private boolean update_tank(HttpServletRequest request) {
@@ -290,9 +287,12 @@ public class tanque extends HttpServlet implements servlet_utils {
 
             case "/crud" -> {
                 if (!current_user_is_admin(request)) {
-                    LOGGER.log(Level.SEVERE, "User is not admin");
-                    response.sendRedirect("/SPR/home");
-                    return;
+                    LOGGER.log(Level.INFO, "User is not admin");
+                    vista = "/WEB-INF/jsps/tanks/tanks_view.jsp";
+                    //response.sendRedirect("/SPR/home");
+                } else {
+                    LOGGER.log(Level.INFO, "User is admin");
+                    vista = "/WEB-INF/jsps/tanks/tanks_crud.jsp";
                 }
 
                 var q = em.createQuery("SELECT t FROM Tanque t", Tanque.class);
@@ -302,7 +302,7 @@ public class tanque extends HttpServlet implements servlet_utils {
                 q.setMaxResults(10);
                 List<Tanque> tanques = (List<Tanque>) q.getResultList();
                 request.setAttribute("tanques_data", tanques);
-                vista = "/WEB-INF/jsps/tanks/tanks_crud.jsp";
+                
                 //this.tabla_tanques(writter);
             }
 
