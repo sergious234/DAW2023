@@ -7,6 +7,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Configuracion</title>
         <link rel="stylesheet" type="text/css" href="/SPR/css/main_menu.css"/>
+        <script src="https://cdn.tailwindcss.com"></script>
     </head>
     <body class="bg-zinc-950">
        	<div class="flex flex-col">
@@ -38,7 +39,6 @@
         </div>
 
         <%@include file="../footer.jsp" %>
-        <script src="https://cdn.tailwindcss.com"></script>
         <script src="/SPR/js/user_conf_scripts.js"></script>
     </body>
 </html>

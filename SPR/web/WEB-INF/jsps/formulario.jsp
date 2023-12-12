@@ -42,7 +42,7 @@
                             </div>
 
                             <div class="pt-10 flex justify-center">
-                                <input id="send_login_button" type="submit" class="px-3 rounded-md bg-white text-black text-center" value="Iniciar sesion">
+                                <button id="send_login_button" class="px-10 px-3 rounded-md bg-white text-black text-center"> Iniciar sesión </button>
                             </div>
                             
                         </form>
