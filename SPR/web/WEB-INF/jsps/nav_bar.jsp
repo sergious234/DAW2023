@@ -1,6 +1,6 @@
 <nav class="main_menu text-white space-y-4 pl-3 min-h-screen w-12">
     <div class="mt-3 mr-2">
-        <a class="block space-x-3" href="https://github.com/sergious234">
+        <a class="block text-center" href="https://github.com/sergious234">
             <img class="no-invert rounded-full" src="/SPR/menu_icons/Sergious.jpg" alt="alt"/>
             <span class="w-full justify-center text-center">
                 Sergious
@@ -17,7 +17,7 @@
         </a>
     </div>
     <div>
-        <a class="inline flex space-x-3" href="ranking.html">
+        <a class="inline flex space-x-3" href="/SPR/ranking/list">
             <img src="/SPR/menu_icons/ranking.svg" alt="alt"/>
             <span  class="truncate">Ranking</span>
         </a>
@@ -35,7 +35,7 @@
         </a>
     </div>
     <div>
-        <a class="inline flex space-x-3" href="clanes.html">
+        <a class="inline flex space-x-3" href="/SPR/home">
             <img src="/SPR/menu_icons/clan.svg" alt="alt"/>
             <span class="truncate" >Clanes</span>
         </a>

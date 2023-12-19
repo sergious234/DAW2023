@@ -12,12 +12,12 @@
        	<div class="flex flex-col">
             <div class="">
                 <%@include file="../nav_bar.jsp" %>
-                <div class="pl-14 flex flex-row gap-x-24">
-                    <div class="flex col-span-4 justify-center text-start">
+                <div class="pl-14 flex flex-row justify-around gap-x-24">
+                    <div class="flex justify-around text-start" style="justify-content:space-around">
                         <section class="mt-10 text-red-50 text-center">
                             <p class="max-h-fit text-4xl text-red-50">Listado de tanques</p>
                             <div class="pt-20"></div>
-                            <div id="table_div">
+                            <div id="table_div" class="flex justify-around">
                                 <%@include file="tank_table.jsp" %>
                             </div>
                             <div class="pt-10">

@@ -29,7 +29,7 @@ import warg_api.Tankopedia;
  *
  * @author sergio
  */
-@WebServlet(name = "tanque", urlPatterns = {"/tanque/*"})
+@WebServlet(name = "tanque", urlPatterns = { "/tanque/*" })
 public class tanque extends HttpServlet implements servlet_utils {
 
     private static final Logger LOGGER = Logger.getLogger(tanque.class.getName());
@@ -134,7 +134,7 @@ public class tanque extends HttpServlet implements servlet_utils {
         }
 
         Tanque tanque = res.get();
-        //em.getTransaction().commit();
+        // em.getTransaction().commit();
 
         return this.remove(tanque);
     }
@@ -180,7 +180,7 @@ public class tanque extends HttpServlet implements servlet_utils {
         });
 
         if (id_param.isEmpty()
-            || name_param.isEmpty() || dmg_param.isEmpty() || hp_param.isEmpty()) {
+                || name_param.isEmpty() || dmg_param.isEmpty() || hp_param.isEmpty()) {
             LOGGER.severe("[ERROR] " + "Faltan campos por rellenar");
             LOGGER.info(name_param.toString());
             LOGGER.info(dmg_param.toString());
@@ -194,17 +194,15 @@ public class tanque extends HttpServlet implements servlet_utils {
             return false;
         }
 
-        t.ifPresent(e
-            -> {
+        t.ifPresent(e -> {
             e.setNombre(name_param.get());
             e.setHp(hp_param.get());
             e.setDmg(dmg_param.get());
-        }
-        );
+        });
 
         this.update(t.get());
         System.out.println(
-            "Good update");
+                "Good update");
 
         return true;
     }
@@ -213,15 +211,17 @@ public class tanque extends HttpServlet implements servlet_utils {
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
      *
-     * @param request servlet request
+     * @param request  servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
+     * @throws IOException      if an I/O error occurs
      */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+            throws IOException, ServletException {
         response.setContentType("text/html;charset=UTF-8");
         String action = request.getPathInfo();
         String vista = "";
+
         switch (action) {
             case "/add_defaults" -> {
                 if (!current_user_is_admin(request)) {
@@ -273,9 +273,7 @@ public class tanque extends HttpServlet implements servlet_utils {
                 JSONObject body = new JSONObject(str_body);
                 int page = body.getInt("page");
 
-                System.out.println("Page: " + page);
-                var q = em.createQuery("SELECT t FROM Tanque t", Tanque.class
-                );
+                var q = em.createQuery("SELECT t FROM Tanque t", Tanque.class);
                 q.setFirstResult(10 * page);
                 q.setMaxResults(10);
                 List<Tanque> tanques = (List<Tanque>) q.getResultList();
@@ -287,11 +285,8 @@ public class tanque extends HttpServlet implements servlet_utils {
 
             case "/crud" -> {
                 if (!current_user_is_admin(request)) {
-                    LOGGER.log(Level.INFO, "User is not admin");
                     vista = "/WEB-INF/jsps/tanks/tanks_view.jsp";
-                    //response.sendRedirect("/SPR/home");
                 } else {
-                    LOGGER.log(Level.INFO, "User is admin");
                     vista = "/WEB-INF/jsps/tanks/tanks_crud.jsp";
                 }
 
@@ -302,8 +297,8 @@ public class tanque extends HttpServlet implements servlet_utils {
                 q.setMaxResults(10);
                 List<Tanque> tanques = (List<Tanque>) q.getResultList();
                 request.setAttribute("tanques_data", tanques);
-                
-                //this.tabla_tanques(writter);
+
+                // this.tabla_tanques(writter);
             }
 
             default ->
@@ -318,9 +313,9 @@ public class tanque extends HttpServlet implements servlet_utils {
      *
      * @param <T>
      * @param entityClass Tipo a devolver
-     * @param pk Clave primaria de la busqueda
+     * @param pk          Clave primaria de la busqueda
      * @return En caso de que exista Optional con entidad, en caso contrario
-     * Optinal Empty
+     *         Optinal Empty
      */
     private <T extends Object> Optional<T> find_by_pk(Class<T> entityClass, Object pk) {
         try {
@@ -370,32 +365,33 @@ public class tanque extends HttpServlet implements servlet_utils {
         }
     }
 
-        // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the
+    // + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *
-     * @param request servlet request
+     * @param request  servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
+     * @throws IOException      if an I/O error occurs
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-        throws ServletException, IOException {
+            throws ServletException, IOException {
         processRequest(request, response);
     }
 
     /**
      * Handles the HTTP <code>POST</code> method.
      *
-     * @param request servlet request
+     * @param request  servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
+     * @throws IOException      if an I/O error occurs
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-        throws ServletException, IOException {
+            throws ServletException, IOException {
         processRequest(request, response);
     }
 

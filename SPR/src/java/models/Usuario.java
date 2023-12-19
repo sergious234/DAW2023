@@ -6,15 +6,18 @@ package models;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import java.io.Serializable;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -42,6 +45,25 @@ public class Usuario implements Serializable {
 
     @Column(name = "perm_lvl")
     private Integer perm_lvl = 0;
+
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
+    private List<Replay> reps;
+
+    public Integer getPerm_lvl() {
+        return perm_lvl;
+    }
+
+    public void setPerm_lvl(Integer perm_lvl) {
+        this.perm_lvl = perm_lvl;
+    }
+
+    public List<Replay> getReps() {
+        return reps;
+    }
+
+    public void setReps(List<Replay> reps) {
+        this.reps = reps;
+    }
 
     public static String encode_pass(String pass) {
         try {
@@ -131,11 +153,10 @@ public class Usuario implements Serializable {
         return "models.Usuario[ id=" + id + " ]";
     }
 
-    
     public PermLvls get_perm_lvl() {
         return PermLvls.from_int(perm_lvl);
     }
-    
+
     public boolean is_admin() {
         return PermLvls.ADMIN.value == perm_lvl;
     }

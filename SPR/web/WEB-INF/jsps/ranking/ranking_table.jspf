@@ -1,0 +1,30 @@
+<%@page import = "models.Usuario" %>
+<%@page language="java" import="java.util.List,java.lang.*" %> 
+<table class="table-fixed">
+    <thead>
+        <tr>
+            <th class="border w-14">ID</th>
+            <th class="border w-52">NOMBRE</th>
+            <th class="border w-52">N REPLAYS</th>
+        </tr>
+    </thead>
+    <tbody id="ranking_body"> 
+        <%
+            List<Usuario> users = (List<Usuario>) request.getAttribute("usuarios_data");
+            if (users == null) {
+                return;
+            }
+
+            int contador = 0;
+            for (Usuario t : users) {
+                contador++;
+                int nReplays = t.getReps().size();
+                out.println("<td class=\"border text-center\">"+ t.getId() +"</td>");
+                out.println("<td class=\"border text-center\" >"+ t.getUserName() + "</td>");
+                out.println("<td class=\"border text-center\" >"+ nReplays + "</td>");
+                out.println("</tr>");
+            }
+        %>
+    </tbody>
+</table>
+

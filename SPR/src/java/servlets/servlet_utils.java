@@ -17,14 +17,23 @@ import models.Usuario;
  */
 public interface servlet_utils {
 
+    @Deprecated
     public static final String USER_SESSION_ATTR = "user";
+
+    public static final String USER_OBJ_ATTR = "user_obj";
+
     abstract EntityManager getEntityManager();
+
+    default Optional<String> get_req_attr(HttpServletRequest request, String attr) {
+        return Optional.ofNullable(request.getAttribute(attr))
+            .map(e -> (String) e);
+    }
 
     default Optional<String> get_session_attr(HttpServletRequest request, String attr) {
         return Optional.ofNullable(request.getSession().getAttribute(attr))
             .map(e -> (String) e);
     }
-   
+
     default Usuario findByUserName(String user_name) {
         String jpql = "SELECT u FROM Usuario u WHERE u.userName = :userName";
         Query query = getEntityManager().createQuery(jpql);
@@ -39,8 +48,8 @@ public interface servlet_utils {
 
     default boolean current_user_is_admin(HttpServletRequest request) {
         var user = this.get_session_attr(request, USER_SESSION_ATTR);
-        
+
         return user.map(e -> findByUserName(e).is_admin())
-                .orElse(false);
+            .orElse(false);
     }
 }

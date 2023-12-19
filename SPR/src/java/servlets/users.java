@@ -7,7 +7,6 @@ package servlets;
 import jakarta.annotation.Resource;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
-import jakarta.persistence.Query;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -31,7 +30,6 @@ public class users extends HttpServlet implements servlet_utils {
 
     private static final Logger LOGGER = Logger.getLogger(users.class.getName());
     private static final String USER_SESSION_ATTR = "user";
-    private static final String USER_OBJ_ATTR = "user_obj";
 
     @PersistenceContext(unitName = "ServletJPAPU")
     private EntityManager em;
@@ -95,13 +93,14 @@ public class users extends HttpServlet implements servlet_utils {
                 if (this.log_in(request)) {
                     LOGGER.log(Level.INFO, "[INFO] {0}", ("Succesfull login"));
                     request.getSession().setAttribute(USER_SESSION_ATTR, request.getParameter("username"));
-                    
+
                     var username = this.get_parameter(request, "username");
                     if (username.isPresent()) {
                         var user = this.findByUserName(username.get().trim());
                         System.out.println(user == null);
-                        if(user != null)
+                        if (user != null) {
                             request.getSession().setAttribute(USER_OBJ_ATTR, user);
+                        }
                     }
                 } else {
                     LOGGER.log(Level.INFO, "[INFO] {0}", ("Error login"));
@@ -122,7 +121,6 @@ public class users extends HttpServlet implements servlet_utils {
             case "/config" -> {
                 var user_attr = this.get_session_attr(request, USER_SESSION_ATTR);
                 if (user_attr.isPresent()) {
-                    LOGGER.log(Level.INFO, "[INFO] Conf");
                     var user_obj = this.findByUserName(user_attr.get());
                     request.setAttribute("user_obj", user_obj);
                     vista = "/WEB-INF/jsps/user_conf/user_conf.jsp";
@@ -136,7 +134,7 @@ public class users extends HttpServlet implements servlet_utils {
             case "/formulario" -> {
                 vista = "/WEB-INF/jsps/formulario.jsp";
             }
-            
+
             case "/list" -> {
                 var q = em.createQuery("SELECT t FROM Usuario t", Usuario.class);
                 Integer start = (0);
@@ -145,10 +143,10 @@ public class users extends HttpServlet implements servlet_utils {
                 q.setMaxResults(10);
                 List<Usuario> tanques = (List<Usuario>) q.getResultList();
                 request.setAttribute("users_data", tanques);
-                
+
                 vista = "/WEB-INF/jsps/users/users_list.jsp";
             }
-            
+
             default -> {
                 vista = "/WEB-INF/jsps/formulario.jsp";
             }
@@ -264,11 +262,11 @@ public class users extends HttpServlet implements servlet_utils {
         if (u == null) {
             return false;
         }
-        
+
         System.out.println(u.get_perm_lvl());
         return u.getPassword().equals(Usuario.encode_pass(password));
     }
-    
+
     @Override
     public EntityManager getEntityManager() {
         return this.em;
